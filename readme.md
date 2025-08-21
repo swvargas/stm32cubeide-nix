@@ -2,6 +2,8 @@
 
 This is a project to package [STM32CubeIDE](https://www.st.com/en/development-tools/stm32cubeide.html) for nix.
 
+You'll notice a pinned version of `swt`. CubeIDE is built against that specific version, and because we aren't building CubeIDE (just extracting it) we can't compile against a different version.
+
 ### Usage (classic, no flakes)
 
 ```nix
