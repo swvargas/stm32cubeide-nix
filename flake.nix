@@ -42,6 +42,12 @@
       lib.listToAttrs
       (attrs: attrs // legacyPackages.stable // { default = legacyPackages.stable.stm32cubeide; })
     ];
+  }) // inputs.flake-utils.lib.eachDefaultSystem (system:
+  let
+    pkgs = import inputs.nixpkgs-stable { inherit system; };
+  in
+  {
+    formatter = pkgs.nixfmt-tree;
   }) // {
     overlays = {
       default = import ./overlay.nix;
