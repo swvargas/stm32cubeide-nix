@@ -1,6 +1,7 @@
 {
   overlay = import ./overlay.nix;
-  makePackage = pkgs:
+  makePackage =
+    pkgs:
     let
       swt_4_33 = pkgs.callPackage ./packages/swt_4_33/package.nix;
     in

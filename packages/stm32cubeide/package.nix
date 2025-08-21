@@ -54,27 +54,39 @@ stdenv.mkDerivation (finalAttrs: {
       hash = "sha256-+jeXv7+ywRhgQAIl7aFCnRzhbVJZPlW6JICvGLacPG0=";
       hashMode = "flat";
     };
-    extracted = runCommand "${finalAttrs.pname}-src-extracted" { nativeBuildInputs = [ gnugrep unzip ./extract_makeself.bash ]; } ''
-      (
-        set -euo pipefail
-        set -xv
-        zip=${lib.escapeShellArg finalAttrs.passthru.zip}
-        declare fileList
-        fileList="$(unzip -Z -1 "$zip")"
-        declare -i countFiles
-        countFiles="$(printf '%s\n' "$fileList" | wc -l)"
-        if [[ $countFiles != 1 ]]; then
-          echo "Error: Expected exactly 1 file in the zip, but there were $countFiles files" >&2
-          exit 1
-        fi
+    extracted =
+      runCommand "${finalAttrs.pname}-src-extracted"
+        {
+          nativeBuildInputs = [
+            gnugrep
+            unzip
+            ./extract_makeself.bash
+          ];
+        }
+        ''
+          (
+            set -euo pipefail
+            set -xv
+            zip=${lib.escapeShellArg finalAttrs.passthru.zip}
+            declare fileList
+            fileList="$(unzip -Z -1 "$zip")"
+            declare -i countFiles
+            countFiles="$(printf '%s\n' "$fileList" | wc -l)"
+            if [[ $countFiles != 1 ]]; then
+              echo "Error: Expected exactly 1 file in the zip, but there were $countFiles files" >&2
+              exit 1
+            fi
 
-        mkdir -p "$out"
-        extract_makeself_from_command "$out" unzip -p "$zip"
-      )
-    '';
+            mkdir -p "$out"
+            extract_makeself_from_command "$out" unzip -p "$zip"
+          )
+        '';
   };
 
-  nativeBuildInputs = [ makeWrapper autoPatchelfHook ];
+  nativeBuildInputs = [
+    makeWrapper
+    autoPatchelfHook
+  ];
 
   buildInputs = [
     alsa-lib
@@ -130,7 +142,9 @@ stdenv.mkDerivation (finalAttrs: {
     mkdir -p "$mainDir"
     tar -xf *.tar.gz -C "$mainDir"
     mkdir -p "$out"/share/applications
-    bash ./desktop_shortcut.sh ${lib.escapeShellArg (finalAttrs.version + "-nix")} "$mainDir" "$out"share/applications/st-stm32cubeide-${finalAttrs.version}.desktop
+    bash ./desktop_shortcut.sh ${
+      lib.escapeShellArg (finalAttrs.version + "-nix")
+    } "$mainDir" "$out"share/applications/st-stm32cubeide-${finalAttrs.version}.desktop
     binDir="$out"/bin
     mkdir -p "$binDir"
 
