@@ -8,7 +8,6 @@
   makeWrapper,
   swt_4_33,
   autoPatchelfHook,
-
   alsa-lib,
   at-spi2-atk,
   cairo,
@@ -49,9 +48,9 @@ stdenv.mkDerivation (finalAttrs: {
 
   passthru = {
     zip = requireFile {
-      name = "st-stm32cubeide_1.19.0_25607_20250703_0907_amd64.sh.zip";
+      name = "st-stm32cubeide_2.1.0_27993_20260219_1630_amd64.sh.zip";
       url = "https://www.st.com/en/development-tools/stm32cubeide.html#get-software";
-      hash = "sha256-+jeXv7+ywRhgQAIl7aFCnRzhbVJZPlW6JICvGLacPG0=";
+      hash = "sha256-mLlJndPOCqHuLnbayh0fE9jpNOeHaFM7iYKsYwNWeMw=";
       hashMode = "flat";
     };
     extracted =
