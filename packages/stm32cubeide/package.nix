@@ -6,7 +6,7 @@
   gnugrep,
   unzip,
   makeWrapper,
-  swt_4_33,
+  swt,
   autoPatchelfHook,
   alsa-lib,
   at-spi2-atk,
@@ -37,9 +37,6 @@
   kdePackages,
   gsettings-desktop-schemas,
 }:
-let
-  swt = swt_4_33;
-in
 stdenv.mkDerivation (finalAttrs: {
   pname = "stm32cubeide";
   version = "1.19.0";
